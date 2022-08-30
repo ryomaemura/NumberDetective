@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -61,6 +62,9 @@ public class NumberManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI descriptionText;
     int inputNumber = 0;
     int setFlag = 0;
+    int randomNumber1 = 0;
+    int randomNumber2 = 0;
+    int temp = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -68,12 +72,26 @@ public class NumberManager : MonoBehaviour
         buttonTexts = new TextMeshProUGUI[] {buttonText1, buttonText2, buttonText3, buttonText4, buttonText5, buttonText6, buttonText7, buttonText8, buttonText9, buttonText10, buttonText11, buttonText12, buttonText13, buttonText14, buttonText15, buttonText16};
         modeButtons = new Button[] {maxButton, minButton, sumButton};
 
+        resetnumbers();
         resetNumberInputField();
         resetSubmitButton();
     }
 
     // Update is called once per frame
     void Update() {
+    }
+
+    public void resetnumbers() {
+        for (int i = 0; i < 20; i++) {
+            // output 0 ~ numbers.length - 1
+            randomNumber1 = UnityEngine.Random.Range(0, numbers.Length);
+            // output 0 ~ numbers.length - 1
+            randomNumber2 = UnityEngine.Random.Range(0, numbers.Length);
+
+            temp = numbers[randomNumber1];
+            numbers[randomNumber1] = numbers[randomNumber2];
+            numbers[randomNumber2] = temp;
+        }
     }
 
     public void resetNumberButton() {
