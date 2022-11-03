@@ -50,6 +50,27 @@ public class NumberManager : MonoBehaviour
     int moveNumber = 0;
     [SerializeField] TextMeshProUGUI resultText;
     int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    int[,] relasionshipNumbers = {
+        {0, 1, 0, 0,   1, 0, 0, 0,   0, 0, 0, 0,   0, 0, 0, 0},
+        {1, 0, 1, 0,   0, 1, 0, 0,   0, 0, 0, 0,   0, 0, 0, 0},
+        {0, 1, 0, 1,   0, 0, 1, 0,   0, 0, 0, 0,   0, 0, 0, 0},
+        {0, 0, 1, 0,   0, 0, 0, 1,   0, 0, 0, 0,   0, 0, 0, 0},
+
+        {1, 0, 0, 0,   0, 1, 0, 0,   1, 0, 0, 0,   0, 0, 0, 0},
+        {0, 1, 0, 0,   1, 0, 1, 0,   0, 1, 0, 0,   0, 0, 0, 0},
+        {0, 0, 1, 0,   0, 1, 0, 1,   0, 0, 1, 0,   0, 0, 0, 0},
+        {0, 0, 0, 1,   0, 0, 1, 0,   0, 0, 0, 1,   0, 0, 0, 0},
+
+        {0, 0, 0, 0,   1, 0, 0, 0,   0, 1, 0, 0,   1, 0, 0, 0},
+        {0, 0, 0, 0,   0, 1, 0, 0,   1, 0, 1, 0,   0, 1, 0, 0},
+        {0, 0, 0, 0,   0, 0, 1, 0,   0, 1, 0, 1,   0, 0, 1, 0},
+        {0, 0, 0, 0,   0, 0, 0, 1,   0, 0, 1, 0,   0, 0, 0, 1},
+
+        {0, 0, 0, 0,   0, 0, 0, 0,   1, 0, 0, 0,   0, 1, 0, 0},
+        {0, 0, 0, 0,   0, 0, 0, 0,   0, 1, 0, 0,   1, 0, 1, 0},
+        {0, 0, 0, 0,   0, 0, 0, 0,   0, 0, 1, 0,   0, 1, 0, 1},
+        {0, 0, 0, 0,   0, 0, 0, 0,   0, 0, 0, 1,   0, 0, 1, 0},
+    };
     // mode : max, min, sum
     int[] modeBoolean = {0, 0, 0};
     int modeFlag = 0;
@@ -158,20 +179,17 @@ public class NumberManager : MonoBehaviour
     public void selectNumber(int buttonNumber) {
         if (selectButtons[buttonNumber] == 1) {
             resetNumberButton();
-        } else if (
-            buttonNumber != 3 &
-            buttonNumber != 7 &
-            buttonNumber != 11 &
-            buttonNumber != 12 &
-            buttonNumber != 13 &
-            buttonNumber != 14 &
-            buttonNumber != 15
-        ) {
+        } else {
             resetNumberButton();
 
-            for (int i = 0; i < addNumbers.Length; i++) {
-                buttons[buttonNumber + addNumbers[i]].GetComponent<Image>().color = new Color32(255, 100, 100, 255);
-                selectButtons[buttonNumber + addNumbers[i]] = 1;
+            buttons[buttonNumber].GetComponent<Image>().color = new Color32(255, 100, 100, 255);
+            selectButtons[buttonNumber] = 1;
+
+            for (int i = 0; i < numbers.Length; i++) {
+                if (relasionshipNumbers[buttonNumber, i] == 1) {
+                    buttons[i].GetComponent<Image>().color = new Color32(255, 100, 100, 255);
+                    selectButtons[i] = 1;
+                }
             }
         }
     }
